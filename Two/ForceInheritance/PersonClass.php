@@ -88,19 +88,20 @@ final class AdminUser extends AbstractUser
         AdminPermission ...$permissions
     ) {
         parent::__construct($id, $name);
-        \array_map(
+        array_map(
             callback: function (AdminPermission $perm): void {
                 $this->permissions[$perm->getPermName()] = $perm;
             },
             array: $permissions
         );
+        // var_dump($permissions);
     }
 
     public function __toString(): string
     {
-        $permissions = \implode(
+        $permissions = implode(
             separator: "\n",
-            array: \array_map(
+            array: array_map(
                 callback: static function (
                     AdminPermission $perm
                 ): string {

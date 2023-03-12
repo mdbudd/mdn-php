@@ -18,6 +18,17 @@ use Two\ForceInheritance\FrontEndUser;
 
 require_once "ForceInheritance\PersonClass.php";
 
+use Two\ForceInheritance\ShinyNew;
+
+require_once "ForceInheritance\ConstructVis.php";
+
+use Two\StaticAccess\ParentClass;
+use Two\StaticAccess\ChildClass;
+
+require_once "StaticAccess\AccessClass.php";
+
+header("Content-Type: text/plain");
+
 $inheritance = new MyChildClass();
 $interface = new MultipleInterfaces();
 $class = new MyClass();
@@ -64,3 +75,51 @@ $adminUser = new AdminUser(
 );
 
 echo "\n" . $adminUser;
+
+// $adminRef = new AdminPermission(permName: AdminPermission::CAN_VIEW, can: true);
+// echo "\n" . $adminRef;
+
+(static function (string ...$numbers): void {
+    echo implode("\n", $numbers);
+})(...['one', 'two', 'three']);
+
+
+/*
+* array_filter ( array $array , callable|null $callback = null
+, int $mode = 0 ) : array
+*/
+echo "\n";
+print_r(array_filter(
+    array: [
+        true,
+        false,
+        true,
+    ],
+    callback: static function ($item): bool {
+        return $item === true;
+    }
+));
+/*
+    * array_map ( callable|null $callback , array $array , array
+    ...$arrays ) : array
+    */
+print_r(array_map(
+    array: [
+        true,
+        false,
+        true,
+    ],
+    callback: static function ($item): bool {
+        return !$item;
+    }
+));
+
+
+echo "\n\nParentClass::getStringSelf = " .
+    ParentClass::getStringSelf();
+echo "\n\nParentClass::getStringStatic = " .
+    ParentClass::getStringStatic();
+echo "\n\nChildClass::getStringSelf = " .
+    ChildClass::getStringSelf();
+echo "\n\nChildClass::getStringStatic = " .
+    ChildClass::getStringStatic();
